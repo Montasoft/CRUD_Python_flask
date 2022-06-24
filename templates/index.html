@@ -1,0 +1,77 @@
+{% extends 'layout.html'%}
+{%block content %}
+
+
+
+    <h1>home page</h1>   
+    <div class="row">
+        <div class="col-md-5">
+            {% if contact_update %}      
+
+            <form id="form_update", action="/update/{{contact_update.id}}" method="POST" class="card bg-dark text-light" >
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <label for="id">ID</label>
+                        <input type="text" id="id" name="id" placeholder="field autocomplete" value = "{{contact_update.id}}"class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id">Write your new fullname</label>
+                        <input type="text" name="fullname" placeholder="Write your fullname" value = "{{contact_update.fullname}}" class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id">Write your new email</label>
+                        <input type="text" name="email" placeholder="Write your email" value = "{{contact_update.email}}" class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id">Write your new phone</label>
+                        <input type="text" name="phone" placeholder="Write your phone"value = "{{contact_update.phone}}"class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                    <button class="btn btn-primary" method= "POST">Update</button>       
+                </div>          
+            </form>
+
+        {% else %} 
+            <form id="form_new", action="/new" method="POST" class="card bg-dark text-light" >
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <label for="id">Write your new fullname</label>
+                        <input type="text" name="fullname" placeholder="Write your fullname" class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id">Write your new email</label>
+                        <input type="text" name="email" placeholder="Write your email" class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                    <div class="mb-3">
+                        <label for="id">Write your new phone</label>
+                        <input type="text" name="phone" placeholder="Write your phone" class="form-control rounded-0 bg-dark border-0 text-white">
+                    </div>
+                </div>    
+                <button class="btn btn-primary">Save</button>
+            </form>
+        {% endif%}
+
+        </div>
+        <div class="col-md-7">
+            
+                {% for contact in contacts%}
+                <div class="card-mb-1   text-white bg-dark">
+                    <div class="card-bady p-2">
+   
+                        <div class="d-flex justify-content-between">
+                            <h5>{{contact.fullname}}</h5>
+                            <div>
+                                <a href="{{ url_for('contacts.update', id= contact.id)}}" class=" btn btn-black btn-sm text-white rounded-0">Update</a>
+                                <a href="{{ url_for('contacts.delete', id= contact.id)}}" class=" btn btn-danger btn-sm rounded-0">Delete</a>
+                            </div>
+                        </div>
+                        <p>{{contact.email}}</p>
+                        <p>{{contact.phone}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            
+        </div>
+    </div>
+   
+    
+{% endblock %}
